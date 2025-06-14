@@ -1,0 +1,7 @@
+streamlit>=1,30
+streamlit-authenticator 
+streamlit
+pandas
+sqlalchemy
+bcrypt
+Pillow
