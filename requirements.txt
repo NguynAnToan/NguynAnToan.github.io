@@ -1,8 +1,2 @@
-streamlit>=1,30
-streamlit-authenticator 
 streamlit
-numpy
-pandas
-sqlalchemy
-bcrypt
-Pillow
+
