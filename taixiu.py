@@ -5,7 +5,7 @@ import random
 if 'history' not in st.session_state:
     st.session_state.history = []
 
-st.title("🎲 Game Tài Xỉu - Có Lịch Sử Chơi")
+st.title("🎲 Game Tài Xỉu ")
 
 dice_emojis = {
     1: "⚀",
