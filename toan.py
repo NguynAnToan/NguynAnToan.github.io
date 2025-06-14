@@ -1,82 +1,32 @@
 import streamlit as st
-import sqlite3
 
-# Kết nối hoặc tạo mới CSDL SQLite
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
+# Dữ liệu sản phẩm mẫu
+products = {
+    "Áo thun": {"price": 150000, "description": "Áo thun cotton thoáng mát", "image": "https://via.placeholder.com/150"},
+    "Giày thể thao": {"price": 450000, "description": "Giày chạy bộ nhẹ và bền", "image": "https://via.placeholder.com/150"},
+    "Túi xách": {"price": 250000, "description": "Túi xách thời trang nữ", "image": "https://via.placeholder.com/150"},
+}
 
-# Tạo bảng nếu chưa có
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS users (
-        username TEXT PRIMARY KEY,
-        password TEXT NOT NULL
-    )
-''')
-conn.commit()
+# Giao diện tiêu đề
+st.set_page_config(page_title="Cửa hàng Online", layout="wide")
+st.title("🛒 Cửa hàng Trực tuyến Mini")
+st.markdown("Chào mừng bạn đến với cửa hàng của chúng tôi! Hãy chọn sản phẩm bạn yêu thích.")
 
-# Thêm người dùng mới
-def register_user(username, password):
-    try:
-        cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-        conn.commit()
-        return True
-    except sqlite3.IntegrityError:
-        return False  # Username đã tồn tại
+# Hiển thị danh sách sản phẩm
+for name, info in products.items():
+    with st.container():
+        cols = st.columns([1, 2])
+        with cols[0]:
+            st.image(info["image"], width=150)
+        with cols[1]:
+            st.subheader(name)
+            st.write(info["description"])
+            st.write(f"**Giá:** {info['price']:,} VND")
+            quantity = st.number_input(f"Số lượng - {name}", min_value=0, step=1, key=name)
+            if quantity > 0:
+                st.success(f"Bạn đã thêm {quantity} {name} vào giỏ hàng.")
 
-# Kiểm tra đăng nhập
-def check_login(username, password):
-    cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
-    return cursor.fetchone() is not None
+# Footer
+st.markdown("---")
+st.caption("© 2025 Cửa hàng mini. Được tạo bằng Streamlit.")
 
-# Giao diện đăng nhập
-def login_page():
-    st.subheader("🔐 Đăng nhập")
-    username = st.text_input("Tên đăng nhập")
-    password = st.text_input("Mật khẩu", type="password")
-    if st.button("Đăng nhập"):
-        if check_login(username, password):
-            st.session_state["logged_in"] = True
-            st.session_state["username"] = username
-            st.success(f"Đăng nhập thành công! Xin chào {username}")
-        else:
-            st.error("Tên đăng nhập hoặc mật khẩu không đúng.")
-
-# Giao diện đăng ký
-def register_page():
-    st.subheader("📝 Đăng ký tài khoản")
-    new_username = st.text_input("Tên đăng nhập mới")
-    new_password = st.text_input("Mật khẩu mới", type="password")
-    if st.button("Đăng ký"):
-        if new_username == "" or new_password == "":
-            st.warning("Vui lòng nhập đầy đủ thông tin.")
-        elif register_user(new_username, new_password):
-            st.success("Đăng ký thành công! Bây giờ bạn có thể đăng nhập.")
-        else:
-            st.warning("Tên đăng nhập đã tồn tại.")
-
-# Trang chính sau khi đăng nhập
-def main_page():
-    st.title("🎉 Trang chính")
-    st.write(f"Chào mừng **{st.session_state['username']}** đến với hệ thống.")
-    if st.button("Đăng xuất"):
-        st.session_state.logged_in = False
-        st.experimental_rerun()
-
-# Chạy ứng dụng
-def main():
-    st.title("Hệ thống đăng nhập/đăng ký với SQLite")
-
-    if "logged_in" not in st.session_state:
-        st.session_state["logged_in"] = False
-
-    menu = st.sidebar.radio("Chọn chức năng", ["Đăng nhập", "Đăng ký"])
-
-    if st.session_state["logged_in"]:
-        main_page()
-    elif menu == "Đăng nhập":
-        login_page()
-    elif menu == "Đăng ký":
-        register_page()
-
-if __name__ == "__main__":
-    main()
