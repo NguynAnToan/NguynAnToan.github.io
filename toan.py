@@ -6,7 +6,7 @@ products = {
     "Giày thể thao": {"price": 450000, "description": "Giày chạy bộ nhẹ và bền", "image": "https://via.placeholder.com/150"},
     "Túi xách": {"price": 250000, "description": "Túi xách thời trang nữ", "image": "https://via.placeholder.com/150"},
 }
-
+ 
 # Giao diện tiêu đề
 st.set_page_config(page_title="Cửa hàng Online", layout="wide")
 st.title("🛒 Cửa hàng Trực tuyến Mini")
