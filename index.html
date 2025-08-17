@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Hexashop Ecommerce HTML CSS Template</title>
+    <title>TÒnshop Ecommerce HTML CSS Template</title>
 
 
     <!-- Additional CSS Files -->
@@ -68,6 +68,8 @@ https://templatemo.com/tm-571-hexashop
                                     <li><a href="products.html">Products</a></li>
                                     <li><a href="single-product.html">Single Product</a></li>
                                     <li><a href="contact.html">Contact Us</a></li>
+                                    <li><a href="login.html">Login</a></li>
+                                    <li><a href="register.html">Register</a></li>
                                 </ul>
                             </li>
                             <li class="submenu">
@@ -80,6 +82,12 @@ https://templatemo.com/tm-571-hexashop
                                 </ul>
                             </li>
                             <li class="scroll-to-section"><a href="#explore">Explore</a></li>
+                            <!-- Thêm nút giỏ hàng -->
+                            <li>
+    <a href="cart.html" title="Cart">
+        <i class="fa fa-shopping-cart"></i> Cart
+    </a>
+</li>
                         </ul>        
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -839,6 +847,129 @@ https://templatemo.com/tm-571-hexashop
         });
 
     </script>
+<!-- Login/Register Modal -->
+<div class="modal fade" id="authModal" tabindex="-1" role="dialog" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Login / Register</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Tab buttons -->
+        <div class="d-flex mb-3">
+          <button id="loginTab" class="btn btn-dark flex-fill mr-1">Login</button>
+          <button id="registerTab" class="btn btn-secondary flex-fill">Register</button>
+        </div>
+
+        <!-- Login form -->
+        <div id="loginForm" class="tab-content active">
+          <form id="formLogin">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" class="form-control" id="loginEmail" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control" id="loginPassword" placeholder="Password" required minlength="6">
+            </div>
+            <button type="submit" class="btn btn-dark btn-block">Login</button>
+          </form>
+        </div>
+
+        <!-- Register form -->
+        <div id="registerForm" class="tab-content" style="display:none;">
+          <form id="formRegister">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="form-control" id="fullName" placeholder="Enter full name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" class="form-control" id="regEmail" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control" id="regPassword" placeholder="Password" required minlength="6">
+            </div>
+            <div class="form-group">
+              <label>Confirm Password</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
+            </div>
+            <button type="submit" class="btn btn-dark btn-block">Register</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS for switching tabs and validation -->
+<script>
+  const loginTab = document.getElementById('loginTab');
+  const registerTab = document.getElementById('registerTab');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+
+  loginTab.addEventListener('click', () => {
+    loginTab.classList.add('btn-dark');
+    loginTab.classList.remove('btn-secondary');
+    registerTab.classList.add('btn-secondary');
+    registerTab.classList.remove('btn-dark');
+    loginForm.style.display = 'block';
+    registerForm.style.display = 'none';
+  });
+
+  registerTab.addEventListener('click', () => {
+    registerTab.classList.add('btn-dark');
+    registerTab.classList.remove('btn-secondary');
+    loginTab.classList.add('btn-secondary');
+    loginTab.classList.remove('btn-dark');
+    registerForm.style.display = 'block';
+    loginForm.style.display = 'none';
+  });
+
+  // Login validation
+  document.getElementById('formLogin').addEventListener('submit', function(e){
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+
+    if(email === "" || password === ""){
+      alert("Please fill in all fields");
+      return;
+    }
+    alert("Login successful (demo)");
+  });
+
+  // Register validation
+  document.getElementById('formRegister').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const pass = document.getElementById('regPassword').value.trim();
+    const confirmPass = document.getElementById('confirmPassword').value.trim();
+
+    if(name === "" || email === "" || pass === "" || confirmPass === ""){
+      alert("Please fill in all fields");
+      return;
+    }
+    if(pass.length < 6){
+      alert("Password must be at least 6 characters long");
+      return;
+    }
+    if(pass !== confirmPass){
+      alert("Passwords do not match");
+      return;
+    }
+    alert("Registration successful (demo)");
+  });
+</script>
+
 
   </body>
 </html>
