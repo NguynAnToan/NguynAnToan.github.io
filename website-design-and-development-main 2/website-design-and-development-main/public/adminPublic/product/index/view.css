@@ -1,9 +1,0 @@
-/* Định dạng cho hàng chẵn */
-.datatable-table tbody tr:nth-child(even) {
-    background-color: #e6e4f3;
-}
-
-/* Định dạng cho hàng lẻ */
-.datatable-table tbody tr:nth-child(odd) {
-    background-color: #ffffff;
-}
